@@ -18,6 +18,10 @@ const Login = () => {
 
 	const [login, { error }] = authApi.useLoginMutation()
 
+	if (error) {
+		throw new Error("something wrong!")
+	}
+
 	const onSubmit = async (data: any) => {
 		const userInfo = {
 			id: data.userId,

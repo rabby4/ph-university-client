@@ -26,7 +26,11 @@ const PHForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
 	const methods = useForm(formConfig)
 	return (
 		<FormProvider {...methods}>
-			<Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+			<Form
+				layout="vertical"
+				onFinish={methods.handleSubmit(onSubmit)}
+				size="large"
+			>
 				{children}
 			</Form>
 		</FormProvider>

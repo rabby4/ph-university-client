@@ -7,7 +7,6 @@ import { monthOptions } from "../../../constant/global"
 import academicManagementApi from "../../../redux/features/admin/academicManagement.api"
 import { academicSemesterSchema } from "../../../schemas/academicManagement"
 import { toast } from "sonner"
-import { TResponse } from "../../../types/global"
 
 const nameOptions = [
 	{
@@ -47,7 +46,7 @@ const CreateAcademicSemester = () => {
 		}
 
 		try {
-			const res = (await addAcademicSemester(semesterData)) as TResponse
+			const res = await addAcademicSemester(semesterData)
 			if (res.error) {
 				toast.error(res.error.data.message, { id: toastId })
 			} else {

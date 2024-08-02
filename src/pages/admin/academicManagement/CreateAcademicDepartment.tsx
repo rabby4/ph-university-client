@@ -28,7 +28,6 @@ const CreateAcademicDepartment = () => {
 			name: data.name,
 			academicFaculty: data.academicFaculty,
 		}
-		console.log(departmentData)
 
 		try {
 			const res = await addAcademicDepartment(departmentData)

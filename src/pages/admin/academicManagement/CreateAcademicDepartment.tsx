@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Col, Flex } from "antd"
 import PHForm from "../../../components/form/PHForm"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -15,7 +16,7 @@ const CreateAcademicDepartment = () => {
 	const { data: academicFaculty } =
 		academicManagementApi.useGetAcademicFacultiesQuery(undefined)
 
-	const facultyOptions = academicFaculty?.data!.map((item) => ({
+	const facultyOptions: any = academicFaculty?.data!.map((item) => ({
 		value: item._id,
 		label: item.name,
 	}))

@@ -32,12 +32,17 @@ const PHForm = ({
 		formConfig["resolver"] = resolver
 	}
 
+	const submit: SubmitHandler<FieldValues> = (data) => {
+		onSubmit(data)
+		methods.reset()
+	}
+
 	const methods = useForm(formConfig)
 	return (
 		<FormProvider {...methods}>
 			<Form
 				layout="vertical"
-				onFinish={methods.handleSubmit(onSubmit)}
+				onFinish={methods.handleSubmit(submit)}
 				size="large"
 			>
 				{children}

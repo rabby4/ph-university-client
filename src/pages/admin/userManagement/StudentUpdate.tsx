@@ -1,52 +1,24 @@
-import { Controller, FieldValues, SubmitHandler } from "react-hook-form"
+import { Button, Col, Divider, Form, Input, Row } from "antd"
 import PHForm from "../../../components/form/PHForm"
 import PHInput from "../../../components/form/PHInput"
-import { Button, Col, Divider, Form, Input, Row } from "antd"
 import PHSelect from "../../../components/form/PHSelect"
-import { bloodGroupOptions, genderOptions } from "../../../constant/global"
 import PHDatePicker from "../../../components/form/PHDatePicker"
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form"
+import { bloodGroupOptions, genderOptions } from "../../../constant/global"
 import academicManagementApi from "../../../redux/features/admin/academicManagement.api"
 import userManagementApi from "../../../redux/features/admin/userManagement.api"
+import { useParams } from "react-router-dom"
 
-const studentDummyValues = {
-	name: {
-		firstName: "Shakib",
-		middleName: "Al",
-		lastName: "Hasan",
-	},
-	gender: "male",
-	bloodGroup: "A+",
+const StudentUpdate = () => {
+	// const [addStudent, { data, error }] =
+	// 	userManagementApi.useAddStudentMutation()
+	const { studentId } = useParams()
+	const { data: detailsData } =
+		userManagementApi.useGetSingleStudentQuery(studentId)
 
-	contactNo: "123456789010",
-	emergencyContactNo: "98765432100",
-	presentAddress: "123 Main St, City",
-	permanentAddress: "456 Elm St, Town",
+	const studentDefaultData = detailsData?.data
 
-	guardian: {
-		fatherName: "Michael Smith",
-		fatherOccupation: "Engineer",
-		fatherContactNo: "1112223333",
-		motherName: "Emily Smith",
-		motherOccupation: "Doctor",
-		motherContactNo: "4445556666",
-	},
-
-	localGuardian: {
-		name: "Jane Doe",
-		occupation: "Teacher",
-		contactNo: "7778889999",
-		address: "789 Oak St, Village",
-	},
-
-	admissionSemester: "667552f5495925d1e83cefbb",
-	academicDepartment: "66755241495925d1e83cefb7",
-}
-
-const CreateStudent = () => {
-	const [addStudent, { data, error }] =
-		userManagementApi.useAddStudentMutation()
-
-	console.log({ data: data, error: error })
+	console.log(studentDefaultData)
 
 	const { data: semesterData, isLoading } =
 		academicManagementApi.useGetAllAcademicSemesterQuery(undefined)
@@ -66,26 +38,25 @@ const CreateStudent = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data)
-		const studentData = {
-			password: "student123",
-			student: data,
-		}
-
-		const formData = new FormData()
-
-		formData.append("data", JSON.stringify(studentData))
-		formData.append("file", data.image)
-		addStudent(formData)
-
+		// 		const studentData = {
+		// 			password: "student123",
+		// 			student: data,
+		// 		}
+		//
+		// 		const formData = new FormData()
+		//
+		// 		formData.append("data", JSON.stringify(studentData))
+		// 		formData.append("file", data.image)
+		// 		addStudent(formData)
 		//! This is for development
 		//! just for checking
-		console.log(Object.fromEntries(formData))
+		// console.log(Object.fromEntries(formData))
 	}
 	return (
 		<>
 			<Row>
 				<Col span={24}>
-					<PHForm onSubmit={onSubmit} defaultValues={studentDummyValues}>
+					<PHForm onSubmit={onSubmit} defaultValues={studentDefaultData}>
 						<Divider>Personal Info.</Divider>
 						<Row gutter={10}>
 							<Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -262,4 +233,4 @@ const CreateStudent = () => {
 	)
 }
 
-export default CreateStudent
+export default StudentUpdate

@@ -5,16 +5,22 @@ type TIputProps = {
 	label?: string
 	type: string
 	name: string
+	defaultValue?: string
 }
 
-const PHInput = ({ label, type, name }: TIputProps) => {
+const PHInput = ({ label, type, name, defaultValue }: TIputProps) => {
 	return (
 		<div style={{ marginBottom: "20px" }}>
 			<Controller
 				name={name}
 				render={({ field }) => (
 					<Form.Item label={label}>
-						<Input {...field} type={type} id={name} />
+						<Input
+							{...field}
+							type={type}
+							id={name}
+							defaultValue={defaultValue}
+						/>
 					</Form.Item>
 				)}
 			/>

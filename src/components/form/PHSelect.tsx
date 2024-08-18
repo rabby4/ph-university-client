@@ -1,17 +1,15 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Form, Select } from "antd"
 import { Controller } from "react-hook-form"
 
 type PHSelectProps = {
 	label: string
 	name: string
-	options: {
-		value: string
-		label: string
-		disabled?: boolean
-	}[]
+	options: { value: string; label: string; disabled?: boolean }[] | undefined
+	disabled?: boolean
 }
 
-const PHSelect = ({ label, name, options }: PHSelectProps) => {
+const PHSelect = ({ label, name, options, disabled }: PHSelectProps) => {
 	return (
 		<Controller
 			name={name}
@@ -22,6 +20,7 @@ const PHSelect = ({ label, name, options }: PHSelectProps) => {
 						style={{ width: "100%" }}
 						options={options}
 						size="large"
+						disabled={disabled}
 					/>
 					{error && <small style={{ color: "red" }}>{error.message}</small>}
 				</Form.Item>

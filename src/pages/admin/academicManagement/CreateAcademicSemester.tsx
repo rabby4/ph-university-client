@@ -7,21 +7,23 @@ import { monthOptions } from "../../../constant/global"
 import academicManagementApi from "../../../redux/features/admin/academicManagement.api"
 import { academicSemesterSchema } from "../../../schemas/academicManagement"
 import { toast } from "sonner"
+import { semesterOptions } from "../../../constant/semester"
+import { TResponse } from "../../../types"
 
-const nameOptions = [
-	{
-		value: "01",
-		label: "Autumn",
-	},
-	{
-		value: "02",
-		label: "Summer",
-	},
-	{
-		value: "03",
-		label: "Fall",
-	},
-]
+// const nameOptions = [
+// 	{
+// 		value: "01",
+// 		label: "Autumn",
+// 	},
+// 	{
+// 		value: "02",
+// 		label: "Summer",
+// 	},
+// 	{
+// 		value: "03",
+// 		label: "Fall",
+// 	},
+// ]
 
 const currentYear = new Date().getFullYear()
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -35,7 +37,7 @@ const CreateAcademicSemester = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const toastId = toast.loading("Creating...")
-		const name = nameOptions[Number(data?.name) - 1].label
+		const name = semesterOptions[Number(data?.name) - 1].label
 
 		const semesterData = {
 			name,
@@ -46,7 +48,7 @@ const CreateAcademicSemester = () => {
 		}
 
 		try {
-			const res = await addAcademicSemester(semesterData)
+			const res = (await addAcademicSemester(semesterData)) as TResponse<any>
 			if (res.error) {
 				toast.error(res.error.data.message, { id: toastId })
 			} else {
@@ -65,7 +67,11 @@ const CreateAcademicSemester = () => {
 						onSubmit={onSubmit}
 						resolver={zodResolver(academicSemesterSchema)}
 					>
-						<PHSelect label={"Name"} name={"name"} options={nameOptions} />
+						<PHSelect
+							label={"Academic Semester"}
+							name={"name"}
+							options={semesterOptions}
+						/>
 						<PHSelect label={"Year"} name={"year"} options={yearOptions} />
 						<PHSelect
 							label={"Start Month"}

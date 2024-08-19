@@ -8,6 +8,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form"
 import { toast } from "sonner"
 import academicManagementApi from "../../../redux/features/admin/academicManagement.api"
 import PHInput from "../../../components/form/PHInput"
+import { TResponse } from "../../../types"
 
 const CreateAcademicDepartment = () => {
 	const [addAcademicDepartment] =
@@ -31,7 +32,9 @@ const CreateAcademicDepartment = () => {
 		}
 
 		try {
-			const res = await addAcademicDepartment(departmentData)
+			const res = (await addAcademicDepartment(
+				departmentData
+			)) as TResponse<any>
 			if (res.error) {
 				toast.error(res.error.data.message, { id: toastId })
 			} else {
